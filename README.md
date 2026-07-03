@@ -1,1 +1,1 @@
-#loot Scout
+# Loot Scout

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LootScout</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>LootScout</h1>
+    <p>find cheap games, fast</p>
+  </header>
+
+  <main>
+    <section class="filters">
+      <input type="text" id="search" placeholder="search games..." />
+
+      <input type="number" id="maxPrice" placeholder="max price ($)" min="0" />
+
+      <input type="number" id="minDiscount" placeholder="min discount (%)" min="0" max="100" />
+
+      <select id="store">
+        <option value="">all stores</option>
+        <option value="1">Steam only</option>
+      </select>
+
+      <input type="number" id="pageSize" placeholder="results (e.g. 20)" min="1" max="60" />
+
+      <button id="searchBtn">search</button>
+    </section>
+
+    <section id="results" class="results">
+      <!-- cards go here -->
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
