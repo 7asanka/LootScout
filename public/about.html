@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — LootScout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">LootScout</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="deals.html">Deals</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="about-page">
+    <h1>About LootScout</h1>
+    <p>LootScout is a simple tool for finding cheap game deals without the noise. No ads, no accounts, no clutter — just deals.</p>
+
+    <h2>How it works</h2>
+    <p>We pull deals from <a href="https://www.cheapshark.com" target="_blank">CheapShark</a>, a free API that aggregates prices across multiple game stores. Game details and screenshots come from the Steam API.</p>
+
+    <h2>Why?</h2>
+    <p>Most deal sites are bloated. LootScout strips it back to what matters — price, discount, and a link to buy.</p>
+
+    <h2>Stack</h2>
+    <ul>
+      <li>Node.js + Express (backend proxy)</li>
+      <li>Vanilla HTML, CSS, JS (frontend)</li>
+      <li>CheapShark API + Steam API (data)</li>
+    </ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

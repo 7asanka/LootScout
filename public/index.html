@@ -4,37 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LootScout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>LootScout</h1>
-    <p>find cheap games, fast</p>
-  </header>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">LootScout</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="deals.html">Deals</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
 
-  <main>
-    <section class="filters">
-      <input type="text" id="search" placeholder="search games..." />
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Hunt the Best <span>Game Deals</span></h1>
+      <p>All time low prices, updated daily. No noise, just loot.</p>
+      <a href="deals.html" class="btn-primary">Browse Deals</a>
+    </div>
+  </section>
 
-      <input type="number" id="maxPrice" placeholder="max price ($)" min="0" />
-
-      <input type="number" id="minDiscount" placeholder="min discount (%)" min="0" max="100" />
-
-      <select id="store">
-        <option value="">all stores</option>
-        <option value="1">Steam only</option>
-      </select>
-
-      <input type="number" id="pageSize" placeholder="results (e.g. 20)" min="1" max="60" />
-
-      <button id="searchBtn">search</button>
-    </section>
-
-    <section id="results" class="results">
-      <!-- cards go here -->
-    </section>
-  </main>
+  <section class="featured">
+  <h2>🔥 Best Deals</h2>
+  <div class="store-tabs">
+    <button class="store-tab active" data-store="1">Steam</button>
+    <button class="store-tab" data-store="7">GOG</button>
+    <button class="store-tab" data-store="25">Epic</button>
+    <button class="store-tab" data-store="11">Humble</button>
+  </div>
+  <div id="featured-grid" class="card-grid">
+    <p class="loading">loading deals...</p>
+  </div>
+</section>
 
   <script src="app.js"></script>
 </body>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deals — LootScout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">LootScout</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="deals.html" class="active">Deals</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="deals-page">
+
+    <div class="deals-main">
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="search games..." />
+
+        <button id="searchBtn">search</button>
+      </div>
+
+      <div id="results" class="card-grid"></div>
+
+      <div id="pagination" class="pagination hidden">
+        <button id="prevBtn">← prev</button>
+        <span id="pageInfo"></span>
+        <button id="nextBtn">next →</button>
+      </div>
+    </div>
+
+    <aside id="sidebar" class="sidebar">
+      <h3>Filters</h3>
+
+      <label>Max Price ($)
+        <input type="number" id="maxPrice" min="0" placeholder="e.g. 10" />
+      </label>
+
+      <label>Min Discount (%)
+        <input type="number" id="minDiscount" min="0" max="100" placeholder="e.g. 50" />
+      </label>
+
+      <label>Store
+        <select id="store">
+          <option value="">all stores</option>
+          <option value="1">Steam</option>
+          <option value="7">GOG</option>
+          <option value="25">Epic</option>
+          <option value="11">Humble</option>
+        </select>
+      </label>
+
+      <label>Sort By
+        <select id="sortBy">
+          <option value="Deal Rating" selected>best rating</option>
+          <option value="Savings">highest discount</option>
+          <option value="Price">lowest price</option>
+        </select>
+      </label>
+
+      <label>Per Page
+        <select id="pageSize">
+          <option value="10">10 per page</option>
+          <option value="20" selected>20 per page</option>
+          <option value="50">50 per page</option>
+          <option value="100">100 per page</option>
+        </select>
+      </label>
+
+      <button id="clearFilters">clear filters</button>
+    </aside>
+
+  </div>
+
+  <script src="deals.js"></script>
+</body>
+</html>

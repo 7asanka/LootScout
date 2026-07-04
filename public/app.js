@@ -1,54 +1,79 @@
-const searchBtn = document.getElementById('searchBtn')
-const resultsEl = document.getElementById('results')
+const featuredGrid = document.getElementById('featured-grid')
+const storeTabs = document.querySelectorAll('.store-tab')
 
-searchBtn.addEventListener('click', fetchDeals)
+let stores = {}
+let activeStore = '1'
 
-async function fetchDeals() {
-  const title = document.getElementById('search').value.trim()
-  const maxPrice = document.getElementById('maxPrice').value
-  const minDiscount = document.getElementById('minDiscount').value
-  const store = document.getElementById('store').value
-  const pageSize = document.getElementById('pageSize').value || 20
+async function loadStores() {
+  try {
+    const res = await fetch('/api/stores')
+    const data = await res.json()
+    data.forEach(s => {
+      stores[s.storeID] = s
+    })
+  } catch (err) {
+    console.error('failed to load stores:', err)
+  }
+}
 
-  const params = new URLSearchParams()
-  if (title) params.append('title', title)
-  if (maxPrice) params.append('maxPrice', maxPrice)
-  if (store) params.append('storeID', store)
-  params.append('pageSize', pageSize)
-
-  resultsEl.innerHTML = '<p class="no-results">loading...</p>'
+async function loadFeatured(storeID = '1') {
+  featuredGrid.innerHTML = '<p class="loading">loading deals...</p>'
 
   try {
-    const res = await fetch(`/api/deals?${params}`)
+    const res = await fetch(`/api/featured?storeID=${storeID}`)
     const deals = await res.json()
 
-    // filter by discount % client-side since cheapshark doesn't support it
-    const filtered = minDiscount
-      ? deals.filter(d => parseFloat(d.savings) >= parseFloat(minDiscount))
-      : deals
-
-    if (filtered.length === 0) {
-      resultsEl.innerHTML = '<p class="no-results">no deals found</p>'
+    if (!deals.length) {
+      featuredGrid.innerHTML = '<p class="no-results">no deals found</p>'
       return
     }
 
-    resultsEl.innerHTML = filtered.map(deal => `
-      <div class="card">
-        <img src="${deal.thumb}" alt="${deal.title}" />
-        <div class="card-body">
-          <h3>${deal.title}</h3>
-          <p class="price">
-            <span>$${parseFloat(deal.salePrice).toFixed(2)}</span>
-            was $${parseFloat(deal.normalPrice).toFixed(2)}
-          </p>
-          <p class="discount">${Math.round(deal.savings)}% off</p>
-        </div>
-        <a href="https://www.cheapshark.com/redirect?dealID=${deal.dealID}" target="_blank">get deal</a>
-      </div>
-    `).join('')
-
+    featuredGrid.innerHTML = deals.map(deal => buildCard(deal)).join('')
   } catch (err) {
-    console.error('fetch failed:', err)
-    resultsEl.innerHTML = '<p class="no-results">something went wrong</p>'
+    console.error('failed to load featured:', err)
+    featuredGrid.innerHTML = '<p class="no-results">something went wrong</p>'
   }
 }
+
+function buildCard(deal) {
+  const store = stores[deal.storeID]
+  const storeBadge = store
+    ? `<img src="https://www.cheapshark.com${store.images.icon}" alt="${store.storeName}" class="store-badge" />`
+    : ''
+
+  return `
+    <a class="card" href="game.html?gameID=${deal.gameID}&steamAppID=${deal.steamAppID}">
+      <div class="card-thumb">
+        <img src="${deal.thumb}" alt="${deal.title}" />
+        ${storeBadge}
+      </div>
+      <div class="card-body">
+        <h3>${deal.title}</h3>
+        <p class="price">
+          <span>$${parseFloat(deal.salePrice).toFixed(2)}</span>
+          was $${parseFloat(deal.normalPrice).toFixed(2)}
+        </p>
+        <p class="discount">${Math.round(deal.savings)}% off</p>
+      </div>
+      <div class="card-footer">
+        <button class="deal-btn" onclick="event.preventDefault(); event.stopPropagation(); window.open('https://www.cheapshark.com/redirect?dealID=${deal.dealID}', '_blank')">get deal</button>
+      </div>
+    </a>
+  `
+}
+
+storeTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    storeTabs.forEach(t => t.classList.remove('active'))
+    tab.classList.add('active')
+    activeStore = tab.dataset.store
+    loadFeatured(activeStore)
+  })
+})
+
+async function init() {
+  await loadStores()
+  await loadFeatured(activeStore)
+}
+
+init()
