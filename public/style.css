@@ -65,11 +65,23 @@ body {
   color: var(--gold);
 }
 
+.nav-logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.logo-s {
+  color: var(--red);
+}
+
 .nav-logo {
   font-family: 'Press Start 2P', monospace;
   font-size: 1rem;
   color: var(--gold);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav-links {
@@ -91,6 +103,13 @@ body {
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--gold);
+}
+
+.theme-toggle img {
+  height: 20px;
+  width: 20px;
+  object-fit: contain;
+  display: block;
 }
 
 /* ---- hero ---- */
