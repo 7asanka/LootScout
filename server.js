@@ -4,6 +4,9 @@ const path = require('path')
 
 const app = express()
 const PORT = process.env.PORT || 3000
+const CHEAPSHARK_HEADERS = {
+  'User-Agent': 'LootScout/1.0 (portfolio project)'
+}
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -21,7 +24,7 @@ app.get('/api/deals', async (req, res) => {
   params.append('onSale', 1)
 
   try {
-    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?${params}`)
+    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?${params}`, { headers: CHEAPSHARK_HEADERS })
     const totalPages = response.headers.get('X-Total-Page-Count')
     const data = await response.json()
 
@@ -49,7 +52,7 @@ app.get('/api/featured', async (req, res) => {
   params.append('onSale', 1)
 
   try {
-    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?${params}`)
+    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?${params}`, { headers: CHEAPSHARK_HEADERS })
     const data = await response.json()
     res.json(data)
   } catch (err) {
@@ -61,7 +64,7 @@ app.get('/api/featured', async (req, res) => {
 // store list — used to get logos
 app.get('/api/stores', async (req, res) => {
   try {
-    const response = await fetch('https://www.cheapshark.com/api/1.0/stores')
+    const response = await fetch('https://www.cheapshark.com/api/1.0/stores', { headers: CHEAPSHARK_HEADERS })
     const data = await response.json()
     res.json(data)
   } catch (err) {
@@ -73,7 +76,7 @@ app.get('/api/stores', async (req, res) => {
 // single game info from cheapshark
 app.get('/api/game/:gameID', async (req, res) => {
   try {
-    const response = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${req.params.gameID}`)
+    const response = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${req.params.gameID}`, { headers: CHEAPSHARK_HEADERS })
     const data = await response.json()
     res.json(data)
   } catch (err) {
@@ -85,7 +88,7 @@ app.get('/api/game/:gameID', async (req, res) => {
 // steam game details — description, screenshots, metacritic
 app.get('/api/steam/:steamAppID', async (req, res) => {
   try {
-    const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${req.params.steamAppID}`)
+    const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${req.params.steamAppID}`, { headers: CHEAPSHARK_HEADERS })
     const data = await response.json()
     const gameData = data[req.params.steamAppID]
 
